@@ -1,0 +1,7 @@
+/result
+/.envrc
+/dist-newstyle/
+.pre-commit-config.yaml
+/.direnv/
+*.local
+/n2t-hdl/dist-newstyle/

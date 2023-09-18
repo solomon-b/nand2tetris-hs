@@ -1,0 +1,105 @@
+cabal-version:      3.0
+name:               n2t-hdl
+version:            0.1.0.0
+license:            Apache-2.0
+license-file:       LICENSE
+author:             solomon
+maintainer:         ssbothwell@gmail.com
+category:           Language
+build-type:         Simple
+
+-------------------------------------------------------------------------------
+
+-- Settings shared between all components.
+common common-settings
+  default-language:   Haskell2010
+  default-extensions:
+    BlockArguments
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DerivingVia
+    FlexibleContexts
+    FlexibleInstances
+    GeneralizedNewtypeDeriving
+    ImportQualifiedPost
+    InstanceSigs
+    LambdaCase
+    NamedFieldPuns
+    OverloadedStrings
+    RecordWildCards
+    StrictData
+    TupleSections
+    TypeApplications
+    TypeFamilies
+
+  ghc-options:
+    -Wall -Wcpp-undef -Widentities -Wincomplete-record-updates
+    -Wincomplete-uni-patterns -Wpartial-fields
+    -Werror=missing-home-modules
+
+common common-libraries
+  build-depends:
+    , aeson                 <1.6 || >=2 && <2.1
+    , array
+    , base                  >=2 && <5
+    , bytestring
+    , containers
+    , deepseq
+    , hashable
+    , hedgehog
+    , mtl
+    , optparse-applicative
+    , prettyprinter
+    , text
+    , utf8-string
+
+-------------------------------------------------------------------------------
+
+library
+  import:
+    , common-libraries
+    , common-settings
+
+  hs-source-dirs:
+    src
+  build-depends: 
+    , lens
+    , scientific
+    , template-haskell
+    , th-compat
+    , unordered-containers
+    , vector
+
+  build-tool-depends: alex:alex >=3.2.6, happy:happy >=1.20
+  exposed-modules:
+    Interpreter
+    Parser
+    Parser.Error
+    Parser.Generator
+    Parser.Grammar
+    Parser.Lexer
+    Parser.Monad
+    Parser.QQ
+    Parser.Span
+    Parser.Syntax
+    Parser.Syntax.Name
+    Parser.Token
+
+  other-modules:      Paths_n2t_hdl
+
+-------------------------------------------------------------------------------
+
+test-suite n2t-hdl-test
+  import:
+    , common-libraries
+    , common-settings
+  default-language: Haskell2010
+  -- other-modules:
+  -- other-extensions:
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          Main.hs
+  build-depends:
+      base ^>=4.16.4.0,
+      n2t-hdl
